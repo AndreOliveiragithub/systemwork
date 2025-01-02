@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Solicitação</title>
+    <style>
+        /* Estilos gerais */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #5A9BD5;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 15px;
+            display: block;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        input[type="datetime-local"], input[type="text"], select, textarea {
+            background-color: #f8f8f8;
+        }
+
+        /* Estilo para o campo de descrição */
+        textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        input[type="submit"], button {
+            background-color: #5A9BD5;
+            color: white;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            padding: 12px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+
+        input[type="submit"]:hover, button:hover {
+            background-color: #4b8ac4;
+        }
+
+        /* Efeito de foco nos campos */
+        input:focus, select:focus, textarea:focus {
+            border-color: #5A9BD5;
+            background-color: #e6f4ff;
+            outline: none;
+        }
+
+        /* Estilo para impressão */
+        @media print {
+            body {
+                background-color: #fff;
+                font-size: 16px;
+                margin: 0;
+                padding: 20px;
+                font-family: 'Arial', sans-serif;
+            }
+
+            .container {
+                box-shadow: none;
+                padding: 20px;
+                width: 100%;
+                max-width: none;
+                margin: 0;
+                border-radius: 5px;
+                border: 1px solid #ddd;
+            }
+
+            h1 {
+                color: #5A9BD5;
+                font-size: 24px;
+                text-align: left;
+            }
+
+            .dados-impressao {
+                font-size: 16px;
+                margin-top: 30px;
+            }
+
+            .dados-impressao div {
+                padding: 8px;
+                margin-bottom: 12px;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .dados-impressao span {
+                font-weight: bold;
+                color: #5A9BD5;
+            }
+
+            .dados-impressao .section-title {
+                font-size: 18px;
+                color: #333;
+                margin-bottom: 10px;
+                border-bottom: 2px solid #5A9BD5;
+                padding-bottom: 5px;
+            }
+
+            .dados-impressao .info {
+                font-size: 16px;
+                color: #333;
+            }
+
+            .footer {
+                margin-top: 30px;
+                text-align: center;
+                font-size: 14px;
+                color: #888;
+            }
+
+            /* Remover botões */
+            button, input[type="submit"] {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Formulário de Solicitação</h1>
+
+        <form id="formulario" action="#" method="POST" onsubmit="return validarFormulario()">
+            <div class="form-section">
+                <label for="data-hora">Data e Hora da Solicitação:</label>
+                <input type="datetime-local" id="data-hora" name="data-hora" required>
+            </div>
+
+            <div class="form-section">
+                <label for="nome-solicitante">Nome do Solicitante:</label>
+                <input type="text" id="nome-solicitante" name="nome-solicitante" required>
+            </div>
+
+            <div class="form-section">
+                <label for="pavilhao">Pavilhão:</label>
+                <select id="pavilhao" name="pavilhao" required>
+                    <option value="pavilhao-1">Pavilhão 1</option>
+                    <option value="pavilhao-2">Pavilhão 2</option>
+                    <option value="pavilhao-3">Pavilhão 3</option>
+                    <option value="pavilhao-4">Pavilhão 4</option>
+                </select>
+            </div>
+
+            <div class="form-section">
+                <label for="setor">Setor:</label>
+                <select id="setor" name="setor" required>
+                    <option value="administrativo">Administrativo</option>
+                    <option value="tecnico">Técnico</option>
+                    <option value="logistica">Logística</option>
+                    <option value="financeiro">Financeiro</option>
+                </select>
+            </div>
+
+            <div class="form-section">
+                <label for="tecnico">Nome do Técnico/Analista:</label>
+                <input type="text" id="tecnico" name="tecnico" required>
+            </div>
+
+            <div class="form-section">
+                <label for="historico">Histórico da Solicitação (Descreva o problema):</label>
+                <textarea id="historico" name="historico" placeholder="Descreva o problema..." required></textarea>
+            </div>
+
+            <div class="form-section">
+                <label for="id-os">ID da O.S.:</label>
+                <input type="text" id="id-os" name="id-os" readonly required>
+            </div>
+
+            <input type="submit" value="Enviar Solicitação">
+            
+            <!-- Botões para salvar, imprimir e limpar -->
+            <button type="button" onclick="salvarFormulario()">Salvar</button>
+            <button type="button" onclick="imprimirFormulario()">Imprimir</button>
+            <button type="button" onclick="limparFormulario()">Limpar</button>
+        </form>
+    </div>
+
+    <script>
+        let idCounter = 0;
+
+        // Função para gerar o número automático da O.S.
+        function gerarIdOS() {
+            idCounter++;
+            document.getElementById("id-os").value = "OS" + idCounter.toString().padStart(4, "0");
+        }
+
+        // Chamar a função para gerar o ID da O.S. ao carregar a página
+        window.onload = function() {
+            gerarIdOS();
+        };
+
+        // Função para salvar o formulário no localStorage
+        function salvarFormulario() {
+            let formulario = document.getElementById("formulario");
+            let formularioDados = {
+                dataHora: formulario["data-hora"].value,
+                nomeSolicitante: formulario["nome-solicitante"].value,
+                pavilhao: formulario["pavilhao"].value,
+                setor: formulario["setor"].value,
+                tecnico: formulario["tecnico"].value,
+                historico: formulario["historico"].value,
+                idOs: formulario["id-os"].value
+            };
+            localStorage.setItem("solicitacao", JSON.stringify(formularioDados));
+            alert("Solicitação salva com sucesso!");
+        }
+
+        // Função para imprimir o formulário com um layout adequado
+        function imprimirFormulario() {
+            let formulario = document.getElementById("formulario");
+            let dados = {
+                "Data e Hora da Solicitação": formulario["data-hora"].value,
+                "Nome do Solicitante": formulario["nome-solicitante"].value,
+                "Pavilhão": formulario["pavilhao"].value,
+                "Setor": formulario["setor"].value,
+                "Nome do Técnico/Analista": formulario["tecnico"].value,
+                "Histórico da Solicitação": formulario["historico"].value,
+                "ID da O.S.": formulario["id-os"].value,
+            };
+
+            let conteudo = "<div class='dados-impressao'>";
+            conteudo += "<div class='section-title'>Informações da Solicitação</div>";
+            for (let campo in dados) {
+                conteudo += `<div class="info"><span>${campo}:</span> ${dados[campo]}</div>`;
+            }
+            conteudo += "</div>";
+
+            conteudo += "<div class='footer'>Este documento foi gerado automaticamente.</div>";
+
+            let janela = window.open('', '', 'width=800, height=600');
+            janela.document.write('<html><head><title>Imprimir Solicitação</title><style>');
+            janela.document.write('body { font-family: Arial, sans-serif; margin: 20px; }');
+            janela.document.write('.dados-impressao { font-size: 16px; }');
+            janela.document.write('.dados-impressao .section-title { font-size: 18px; color: #5A9BD5; font-weight: bold; margin-bottom: 10px; border-bottom: 2px solid #5A9BD5; padding-bottom: 5px; }');
+            janela.document.write('.dados-impressao .info { padding: 8px 0; margin-bottom: 12px; border-bottom: 1px solid #ddd; }');
+            janela.document.write('.dados-impressao .info span { font-weight: bold; color: #333; }');
+            janela.document.write('.footer { margin-top: 30px; text-align: center; font-size: 14px; color: #888; }');
+            janela.document.write('</style></head><body>');
+            janela.document.write(conteudo);
+            janela.document.write('</body></html>');
+            janela.document.close();
+            janela.print();
+        }
+
+        // Função para limpar o formulário
+        function limparFormulario() {
+            let formulario = document.getElementById("formulario");
+            formulario.reset();
+            gerarIdOS();  // Gerar novo ID para a próxima solicitação
+        }
+
+        // Função de validação do formulário
+        function validarFormulario() {
+            let formulario = document.getElementById("formulario");
+            if (formulario.checkValidity()) {
+                alert("Solicitação enviada com sucesso!");
+                return true;
+            } else {
+                alert("Por favor, preencha todos os campos obrigatórios.");
+                return false;
+            }
+        }
+    </script>
+
+</body>
+</html>
